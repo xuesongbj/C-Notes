@@ -2,9 +2,7 @@
 
 #### 简介
 
-        在c语言中,goto语句仅支持在单函数内实现label跳转。如果想在多个函数之间实现label跳转,可以使用setjmp标准库
-
-setjmp和longjmp完成分支跳转。
+在c语言中,goto语句仅支持在单函数内实现label跳转。如果想在多个函数之间实现label跳转,可以使用setjmp标准库setjmp和longjmp完成分支跳转。
 
 
 
@@ -45,9 +43,7 @@ int main(int artc, char **argv)
 
 ### 实现原理
 
-        这种跨函数Label跳转采用栈帧寄存器BP、PC、SP指针寄存器完成跳转。setjmp 和longjmp实现label跳转共使用了
-
-bp、sp、si、di、bx、ip等寄存器。如下具体代码实现:
+这种跨函数Label跳转采用栈帧寄存器BP、PC、SP指针寄存器完成跳转。setjmp 和longjmp实现label跳转共使用了bp、sp、si、di、bx、ip等寄存器。如下具体代码实现:
 
 ```c
 
@@ -101,11 +97,7 @@ __declspec(naked) void longjmp(jmp_buf env, int value) {
 }
 ```
 
-        <p>当调用setjmp函数时,会将当前环境进行现场保护(保存到BX寄存器),以便longjmp函数后续使用。当调用
-
-longjmp(jmp_buf env, int value)函数时,value作为返回值setjmp()函数返回。使用IP、SP和BP恢复setjmp()函数现场。回
-
-到setjmp()函数sp位置,重新进行if(setjmp(env) == 0) 比较,此时结果已经为1,所以直接执行分支结构下内容。</p>
+当调用setjmp函数时,会将当前环境进行现场保护(保存到BX寄存器),以便longjmp函数后续使用。当调用longjmp(jmp_buf env, int value)函数时,value作为返回值setjmp()函数返回。使用IP、SP和BP恢复setjmp()函数现场。回到setjmp()函数sp位置,重新进行if(setjmp(env) == 0) 比较,此时结果已经为1,所以直接执行分支结构下内容。
 
 
 
